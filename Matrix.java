@@ -72,7 +72,6 @@ final public class Matrix {
         return C;
     }
 
-
     // return C = A - B
     public Matrix minus(Matrix B) {
         Matrix A = this;
@@ -104,56 +103,6 @@ final public class Matrix {
                 for (int k = 0; k < A.N; k++)
                     C.data[i][j] += (A.data[i][k] * B.data[k][j]);
         return C;
-    }
-
-
-    // return x = A^-1 b, assuming A is square and has full rank
-    public Matrix solve(Matrix rhs) {
-        if (M != N || rhs.M != N || rhs.N != 1)
-            throw new RuntimeException("Illegal matrix dimensions.");
-
-        // create copies of the data
-        Matrix A = new Matrix(this);
-        Matrix b = new Matrix(rhs);
-
-        // Gaussian elimination with partial pivoting
-        for (int i = 0; i < N; i++) {
-
-            // find pivot row and swap
-            int max = i;
-            for (int j = i + 1; j < N; j++)
-                if (Math.abs(A.data[j][i]) > Math.abs(A.data[max][i]))
-                    max = j;
-            A.swap(i, max);
-            b.swap(i, max);
-
-            // singular
-            if (A.data[i][i] == 0.0) throw new RuntimeException("Matrix is singular.");
-
-            // pivot within b
-            for (int j = i + 1; j < N; j++)
-                b.data[j][0] -= b.data[i][0] * A.data[j][i] / A.data[i][i];
-
-            // pivot within A
-            for (int j = i + 1; j < N; j++) {
-                double m = A.data[j][i] / A.data[i][i];
-                for (int k = i+1; k < N; k++) {
-                    A.data[j][k] -= A.data[i][k] * m;
-                }
-                A.data[j][i] = 0.0;
-            }
-        }
-
-        // back substitution
-        Matrix x = new Matrix(N, 1);
-        for (int j = N - 1; j >= 0; j--) {
-            double t = 0.0;
-            for (int k = j + 1; k < N; k++)
-                t += A.data[j][k] * x.data[k][0];
-            x.data[j][0] = (b.data[j][0] - t) / A.data[j][j];
-        }
-        return x;
-
     }
 
     // print matrix to standard output
