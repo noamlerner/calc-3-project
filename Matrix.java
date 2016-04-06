@@ -45,13 +45,6 @@ final public class Matrix {
         return I;
     }
 
-    // swap rows i and j
-    private void swap(int i, int j) {
-        double[] temp = data[i];
-        data[i] = data[j];
-        data[j] = temp;
-    }
-
     // create and return the transpose of the invoking matrix
     public Matrix transpose() {
         Matrix A = new Matrix(N, M);
@@ -104,7 +97,7 @@ final public class Matrix {
                     C.data[i][j] += (A.data[i][k] * B.data[k][j]);
         return C;
     }
-
+ 
     // print matrix to standard output
     public void show() {
         for (int i = 0; i < M; i++) {
@@ -112,5 +105,48 @@ final public class Matrix {
                 System.out.printf("%9.4f ", data[i][j]);
             System.out.println();
         }
+    }
+    /*Everything below this block was coded by the group for this calc 3 project. It was included in this file
+     for ease of use--------------------------------------------------------------------------------*/
+    public int getNumRows(){
+    	return M;
+    }
+    public int getNumCols(){
+    	return N;
+    }
+    // swap rows i and j
+    public void swap(int i, int j) {
+        double[] temp = data[i];
+        data[i] = data[j];
+        data[j] = temp;
+    }
+    // returns a matrix whher a scaled (by scale) version of the row addend has been added to the row addTo 
+    public void addRowToRow(int addend, int addTo, double scale){
+    	if(Double.isNaN(scale)){
+    		scale = 0;
+    	}
+    	for(int i = 0; i < N; i++){
+    		data[addTo][i] += data[addend][i] * scale;
+    	}
+    }
+    // sets column c to col
+    public void setCol(int c, double [] col){
+    	for(int i = 0; i < M; i++){
+    		data[i][c] = col[i];
+    	}
+    }
+    public double [] getCol(int c){
+    	double [] col = new double [M];
+    	for(int i = 0; i < M; i++){
+    		col[i] = data[i][c];
+    	}
+    	return col;
+    }
+    public double [] getRow(int r){
+    	double [] row = data[r];
+    	return row;
+    }
+    public double [][]getData(){
+    	return data;
     }
 }
