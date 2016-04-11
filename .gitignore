@@ -1,0 +1,6 @@
+# Build Files
+*.class
+
+# IntelliJ
+.idea
+*.iml
