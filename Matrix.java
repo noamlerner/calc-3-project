@@ -1,12 +1,13 @@
+import java.util.function.Function;
+
 /******************************************************************************
  *  A bare-bones immutable data type for M-by-N matrices.
  *  From http://introcs.cs.princeton.edu/java/95linear/Matrix.java.html
  ******************************************************************************/
-
-final public class Matrix {
-    private final int M;             // number of rows
-    private final int N;             // number of columns
-    private final double[][] data;   // M-by-N array
+public class Matrix {
+    public final int M;           // number of rows
+    public final int N;           // number of columns
+    public final double[][] data; // M-by-N array
 
     // create M-by-N matrix of 0's
     public Matrix(int M, int N) {
@@ -97,7 +98,7 @@ final public class Matrix {
                     C.data[i][j] += (A.data[i][k] * B.data[k][j]);
         return C;
     }
- 
+
     // print matrix to standard output
     public void show() {
         for (int i = 0; i < M; i++) {
@@ -106,47 +107,84 @@ final public class Matrix {
             System.out.println();
         }
     }
-    /*Everything below this block was coded by the group for this calc 3 project. It was included in this file
-     for ease of use--------------------------------------------------------------------------------*/
-    public int getNumRows(){
-    	return M;
+
+    /***********************************************************************
+     * Everything below this block was coded by the group                  *
+     * for this calc 3 project. It was included in this file for ease use  *
+     ***********************************************************************/
+
+    public int getNumRows() {
+        return M;
     }
-    public int getNumCols(){
-    	return N;
+
+    public int getNumCols() {
+        return N;
     }
-    // swap rows i and j
+
+    /* swap rows i and j
+     */
     public void swap(int i, int j) {
         double[] temp = data[i];
         data[i] = data[j];
         data[j] = temp;
     }
-    // returns a matrix whher a scaled (by scale) version of the row addend has been added to the row addTo 
-    public void addRowToRow(int addend, int addTo, double scale){
-    	if(Double.isNaN(scale)){
-    		scale = 0;
-    	}
-    	for(int i = 0; i < N; i++){
-    		data[addTo][i] += data[addend][i] * scale;
-    	}
+
+    /* returns a matrix whher a scaled (by scale) version of the row addend
+     * has been added to the row addTo
+     */
+    public void addRowToRow(int addend, int addTo, double scale) {
+        if (Double.isNaN(scale)) {
+            scale = 0;
+        }
+        for (int i = 0; i < N; i++) {
+            data[addTo][i] += data[addend][i] * scale;
+        }
     }
-    // sets column c to col
-    public void setCol(int c, double [] col){
-    	for(int i = 0; i < M; i++){
-    		data[i][c] = col[i];
-    	}
+
+    /* sets column c to col
+     */
+    public void setCol(int c, double [] col) {
+        for (int i = 0; i < M; i++) {
+            data[i][c] = col[i];
+        }
     }
-    public double [] getCol(int c){
-    	double [] col = new double [M];
-    	for(int i = 0; i < M; i++){
-    		col[i] = data[i][c];
-    	}
-    	return col;
+
+    public double[] getCol(int c) {
+        double[] col = new double[M];
+        for (int i = 0; i < M; i++) {
+            col[i] = data[i][c];
+        }
+        return col;
     }
-    public double [] getRow(int r){
-    	double [] row = data[r];
-    	return row;
+
+    public double[] getRow(int r) {
+        double[] row = data[r];
+        return row;
     }
-    public double [][]getData(){
-    	return data;
+
+    public double[][] getData() {
+        return data;
+    }
+
+    public Matrix map(Function<Double, Double> mapper) {
+        Matrix mapped = new Matrix(this);
+        for (int i = 0; i < M; i += 1) {
+            for (int j = 0; j < N; j += 1) {
+                mapped.data[i][j] = mapper.apply(mapped.data[i][j]);
+            }
+        }
+        return mapped;
+    }
+
+    public Matrix divide_scalar(double factor) {
+        return map(e -> e / factor);
+    }
+
+    public Matrix multiply_scalar(double factor) {
+        return map(e -> e * factor);
+    }
+
+    public Vector times(Vector vector) {
+        return Vector.from_matrix(this.times(vector));
     }
 }
