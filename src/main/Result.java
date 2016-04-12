@@ -36,4 +36,18 @@ public class Result<V, E> {
         assert this.is_err();
         return this.failure;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        if (this.is_ok()) {
+            builder.append("Ok(");
+            builder.append(this.success.toString());
+        } else if (this.is_err()) {
+            builder.append("Err(");
+            builder.append(this.failure.toString());
+        }
+        builder.append(')');
+        return builder.toString();
+    }
 }

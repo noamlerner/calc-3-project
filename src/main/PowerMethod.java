@@ -15,6 +15,12 @@ public class PowerMethod {
             this.value = value;
             this.vector = vector;
         }
+
+        @Override
+        public String toString() {
+            return "Value Estimate: " + this.value + "\n"
+                    + "Vector Estimate: " + this.vector + "\n";
+        }
     }
 
     public static Result<EigenEstimate, PowerMethodErr> power_method(
