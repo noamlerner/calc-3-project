@@ -264,6 +264,17 @@ public class Matrix {
         return true;
     }
 
+    // Checks to see if all the columns are normal vectors
+    public boolean is_col_normal() {
+        for (int col = 0; col < getNumCols(); col += 1) {
+            Vector column = Vector.from_data(getCol(col));
+            if (Math.abs(column.magnitude() - 1) > EPSILON) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean equals(Matrix other, double epsilon) {
         for (int i = 0; i < getNumRows(); i += 1) {
             for (int j = 0; j < getNumCols(); j += 1) {

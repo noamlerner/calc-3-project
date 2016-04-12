@@ -11,6 +11,9 @@ import static org.junit.Assert.assertTrue;
  * Created by michael on 4/11/16.
  */
 public class MatrixTests {
+    private static final double SQRT_2 = Math.sqrt(2);
+    private static final double INV_SQRT_2 = 1 / SQRT_2;
+
     @Test
     public void subColumns() {
         double[][] data = {
@@ -64,5 +67,27 @@ public class MatrixTests {
         };
         Matrix matrix = new Matrix(data);
         assertFalse(matrix.is_upper_triangular());
+    }
+
+    @Test
+    public void col_normal_true() {
+        double[][] data = {
+            {-INV_SQRT_2,  INV_SQRT_2,            0},
+            { INV_SQRT_2,           0,  -INV_SQRT_2},
+            {          0, -INV_SQRT_2,   INV_SQRT_2},
+        };
+        Matrix matrix = new Matrix(data);
+        assertTrue(matrix.is_col_normal());
+    }
+
+    @Test
+    public void col_normal_false() {
+        double[][] data = {
+                {INV_SQRT_2, 0,       0.1},
+                {INV_SQRT_2, 1, INV_SQRT_2},
+                {         0, 0, INV_SQRT_2},
+        };
+        Matrix matrix = new Matrix(data);
+        assertFalse(matrix.is_col_normal());
     }
 }
