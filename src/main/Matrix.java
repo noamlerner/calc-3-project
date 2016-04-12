@@ -192,7 +192,7 @@ public class Matrix {
     }
 
     public Vector times(Vector vector) {
-        return Vector.from_matrix(this.times(vector));
+        return Vector.from_matrix(this.times((Matrix) vector));
     }
 
     public double getMaxNorm() {
