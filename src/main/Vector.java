@@ -16,7 +16,7 @@ public class Vector extends Matrix {
         return new Vector(matrix.data);
     }
 
-    public static Vector from_data(double[] data) {
+    public static Vector from_data(double... data) {
         double[][] matrix = new double[data.length][1];
         for (int i = 0; i < data.length; i += 1) {
             matrix[i][0] = data[i];
