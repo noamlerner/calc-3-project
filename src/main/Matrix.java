@@ -103,12 +103,16 @@ public class Matrix {
     }
 
     // print matrix to standard output
-    public void show() {
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++)
-                System.out.printf("%9.4f ", data[i][j]);
-            System.out.println();
+            for (int j = 0; j < N; j++) {
+                builder.append(String.format("%9.4f ", data[i][j]));
+            }
+            builder.append('\n');
         }
+        return builder.toString();
     }
 
     /***********************************************************************

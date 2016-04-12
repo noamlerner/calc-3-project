@@ -12,7 +12,7 @@ public class LUFactorization {
 		}
 		L = new Matrix(A.getNumRows(),A.getNumRows());
 		U = new Matrix(A.getData());
-		A.show();
+		System.out.println(A);
 		for(int i = 0; i < U.getNumCols();i++){
 			double [] col = U.getCol(i);
 			double div = col[i];
