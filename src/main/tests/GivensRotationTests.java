@@ -48,16 +48,16 @@ public class GivensRotationTests {
     @Test
     public void randomized_givens() {
         final int SIZES = 6;
-        final int TRIALS = 1000;
+        final int TRIALS = 10000;
 
         for (int size = 2; size < SIZES; size += 1) {
             for (int trial = 0; trial < TRIALS; trial += 1) {
                 Matrix test = Matrix.random(size, size);
                 QrDecomp decomposition = GivensRotation.qr_fact_givens(test).unwrap();
                 try {
-                    assertTrue(decomposition != null);
-                    assertTrue(decomposition.q != null);
-                    assertTrue(decomposition.r != null);
+                    assertNotNull(decomposition);
+                    assertNotNull(decomposition.q);
+                    assertNotNull(decomposition.r);
                     assertTrue(decomposition.r.is_upper_triangular());
                     assertTrue(decomposition.q.is_col_normal());
                     assertEquals(test, decomposition.q.times(decomposition.r));
