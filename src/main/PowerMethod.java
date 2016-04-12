@@ -10,10 +10,12 @@ public class PowerMethod {
     public static class EigenEstimate {
         public final double value;
         public final Vector vector;
+        public final int iteration;
 
-        public EigenEstimate(double value, Vector vector) {
+        public EigenEstimate(double value, Vector vector, int iter) {
             this.value = value;
             this.vector = vector;
+            this.iteration = iter;
         }
 
         @Override
@@ -42,7 +44,8 @@ public class PowerMethod {
         double error = Double.POSITIVE_INFINITY;
         double eigen = Double.POSITIVE_INFINITY;
         // Start power method
-        for (int i = 0; i < iterations && error > tolerance; i += 1) {
+        int i;
+        for (i = 0; i < iterations && error > tolerance; i += 1) {
             Vector next_vec = matrix.times(guess);
             double next_val = next_vec.dot(aux) / guess.dot(aux);
             error = Math.abs(eigen - next_val);
@@ -50,6 +53,6 @@ public class PowerMethod {
             guess = next_vec;
             eigen = next_val;
         }
-        return Result.succeed(new EigenEstimate(eigen, guess.norm()));
+        return Result.succeed(new EigenEstimate(eigen, guess.norm(), i));
     }
 }
