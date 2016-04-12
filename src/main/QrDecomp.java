@@ -11,4 +11,14 @@ public class QrDecomp {
         this.q = q;
         this.r = r;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Q:\n");
+        builder.append(q);
+        builder.append("\nR:\n");
+        builder.append(r);
+        return builder.toString();
+    }
 }

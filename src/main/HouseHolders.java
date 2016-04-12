@@ -29,7 +29,8 @@ public class HouseHolders {
             // Calculate (2 / |v|^2) * v * v_t
             Matrix C = v.times(v.transpose()).multiply_scalar(2 / sub_col_mag_sqr);
             // Finally calculate I - (2 / |v|^2) * v * v_t
-            Matrix H = I.minus(C);
+            // And make it an NxN by putting H in the bottom left corner
+            Matrix H = I.minus(C).pad_top_left(matrix.getNumCols());
             // Update matrix
             matrix = H.times(matrix);
             // Update Q
