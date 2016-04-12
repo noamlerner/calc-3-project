@@ -195,8 +195,15 @@ public class Matrix {
         return Vector.from_matrix(this.times((Matrix) vector));
     }
 
-    public double getMaxNorm() {
-        return 0.0;
-        // TODO
+    public double getMaxNorm(){
+    	double max = 0;
+    	double temp;
+    	for(int i = 0; i < data.length; i++){
+    		for(int j = 0; j < data[i].length; j++){
+    			temp = Math.abs(data[i][j]);
+    			max = temp > max ? temp : max;
+    		}
+    	}
+    	return max;
     }
 }
