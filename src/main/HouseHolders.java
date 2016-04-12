@@ -33,7 +33,7 @@ public class HouseHolders {
             // Update matrix
             matrix = H.times(matrix);
             // Update Q
-            q = H.times(q);
+            q = q.times(H);
         }
 
         return Result.succeed(new QrDecomp(q, matrix));
