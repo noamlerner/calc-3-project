@@ -16,6 +16,16 @@ public class Vector extends Matrix {
         return new Vector(matrix.data);
     }
 
+    public static Vector identity(int N) {
+        assert N > 0;
+        double[][] matrix = new double[N][1];
+        matrix[0][0] = 1;
+        for (int i = 1; i < N; i += 1) {
+            matrix[i][0] = 0;
+        }
+        return new Vector(matrix);
+    }
+
     public static Vector from_data(double... data) {
         double[][] matrix = new double[data.length][1];
         for (int i = 0; i < data.length; i += 1) {
@@ -36,6 +46,14 @@ public class Vector extends Matrix {
 
     public Vector map(Function<Double, Double> mapper) {
         return new Vector(super.map(mapper).data);
+    }
+
+    public Vector multiply_scalar(double factor) {
+        return new Vector(super.multiply_scalar(factor).data);
+    }
+
+    public Vector plus(Vector other) {
+        return new Vector(super.plus(other).data);
     }
 
     public Vector norm() {

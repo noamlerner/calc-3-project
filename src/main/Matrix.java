@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 /******************************************************************************
@@ -164,6 +165,16 @@ public class Matrix {
         return col;
     }
 
+    public Vector getSubColumn(int column, int height) {
+        assert height <= M;
+        assert column < N;
+        double[] sub_col = new double[height];
+        for (int i = M - height, j = 0; i < M; i += 1, j += 1) {
+            sub_col[j] = data[i][column];
+        }
+        return Vector.from_data(sub_col);
+    }
+
     public double[] getRow(int r) {
         double[] row = data[r];
         return row;
@@ -205,5 +216,18 @@ public class Matrix {
     		}
     	}
     	return max;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other != null && other instanceof Matrix) {
+            for (int i = 0; i < getNumRows(); i += 1) {
+                if (!Arrays.equals(data[i], ((Matrix) other).data[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
