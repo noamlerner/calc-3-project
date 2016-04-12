@@ -248,16 +248,19 @@ public class Matrix {
         return new Matrix(matrix);
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other != null && other instanceof Matrix) {
-            for (int i = 0; i < getNumRows(); i += 1) {
-                if (!Arrays.equals(data[i], ((Matrix) other).data[i])) {
+    public boolean equals(Matrix other, double epsilon) {
+        for (int i = 0; i < getNumRows(); i += 1) {
+            for (int j = 0; j < getNumCols(); j += 1) {
+                if (Math.abs(this.data[i][j] - other.data[i][j]) > epsilon) {
                     return false;
                 }
             }
-            return true;
         }
-        return false;
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other != null && other instanceof Matrix && this.equals((Matrix) other, 0.0);
     }
 }
