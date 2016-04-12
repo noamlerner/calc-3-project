@@ -45,11 +45,10 @@ public class PowerMethod {
         double eigen = Double.POSITIVE_INFINITY;
         // Start power method
         int i;
-        for (i = 0; i < iterations && error > tolerance; i += 1) {
+        for (i = 0; i < iterations && error > tolerance * 0.5; i += 1) {
             Vector next_vec = matrix.times(guess);
             double next_val = next_vec.dot(aux) / guess.dot(aux);
             error = Math.abs(eigen - next_val);
-            System.out.println(i + ": " + error + ", " + next_val);
             guess = next_vec;
             eigen = next_val;
         }
