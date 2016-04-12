@@ -1,5 +1,5 @@
 public class PowerMethod {
-    public static enum PowerMethodErr {
+    public enum PowerMethodErr {
         MatrixNotSquare,
         InvalidGuestVecDim,
         InvalidAuxVecDim,
@@ -21,7 +21,7 @@ public class PowerMethod {
         Vector aux,
         double tolerance,
         int iterations)
-
+    {
         // Check if its square
         if (matrix.getNumRows() != matrix.getNumCols()) {
             return Result.fail(PowerMethodErr.MatrixNotSquare);

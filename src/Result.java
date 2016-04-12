@@ -7,10 +7,12 @@ public class Result<V, E> {
         this.failure = failure;
     }
 
+    @SuppressWarnings("unchecked")
     public static <G, B> Result<G, B> fail(B failure) {
         return new Result(null, failure);
     }
 
+    @SuppressWarnings("unchecked")
     public static <G, B> Result<G, B> succeed(G success) {
         return new Result(success, null);
     }

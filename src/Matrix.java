@@ -4,6 +4,7 @@ import java.util.function.Function;
  *  A bare-bones immutable data type for M-by-N matrices.
  *  From http://introcs.cs.princeton.edu/java/95linear/Matrix.java.html
  ******************************************************************************/
+@SuppressWarnings("unused")
 public class Matrix {
     public final int M;           // number of rows
     public final int N;           // number of columns
@@ -186,5 +187,10 @@ public class Matrix {
 
     public Vector times(Vector vector) {
         return Vector.from_matrix(this.times(vector));
+    }
+
+    public double getMaxNorm() {
+        return 0.0;
+        // TODO
     }
 }
