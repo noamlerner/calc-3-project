@@ -39,4 +39,13 @@ public class Vector extends Matrix {
     public Vector norm() {
         return new Vector(divide_scalar(magnitude()).data);
     }
+
+    public double dot(Vector other) {
+        assert this.length == other.length;
+        double sum = 0.0;
+        for (int i = 0; i < this.length; i += 1) {
+            sum += this.data[i][0] * other.data[i][0];
+        }
+        return sum;
+    }
 }
