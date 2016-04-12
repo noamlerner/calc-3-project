@@ -50,4 +50,12 @@ public class Vector extends Matrix {
         }
         return sum;
     }
+
+    public double[] into_array() {
+        double[] array = new double[this.length];
+        for (int i = 0; i < this.length; i += 1) {
+            array[i] = this.data[i][0];
+        }
+        return array;
+    }
 }

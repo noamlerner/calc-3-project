@@ -9,9 +9,9 @@ public class PowerMethod {
 
     public static class EigenEstimate {
         public final double value;
-        public final Matrix vector;
+        public final Vector vector;
 
-        public EigenEstimate(double value, Matrix vector) {
+        public EigenEstimate(double value, Vector vector) {
             this.value = value;
             this.vector = vector;
         }
@@ -46,6 +46,7 @@ public class PowerMethod {
             Vector next_vec = matrix.times(guess);
             double next_val = next_vec.dot(aux) / guess.dot(aux);
             error = Math.abs(eigen - next_val);
+            System.out.println(i + ": " + error + ", " + next_val);
             guess = next_vec;
             eigen = next_val;
         }
