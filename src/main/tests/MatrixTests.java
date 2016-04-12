@@ -4,6 +4,8 @@ import main.Matrix;
 import main.Vector;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by michael on 4/11/16.
@@ -39,5 +41,28 @@ public class MatrixTests {
         Matrix matrix = new Matrix(data);
         Matrix correct = new Matrix(answer);
         assertEquals(correct, matrix.pad_top_left(4));
+    }
+
+    @Test
+    public void upper_triangular_true() {
+        double[][] data = {
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 2, 3},
+                {0, 0, 0, 5},
+        };
+        Matrix matrix = new Matrix(data);
+        assertTrue(matrix.is_upper_triangular());
+    }
+
+    @Test
+    public void upper_triangular_false() {
+        double[][] data = {
+                {1, 0, 0},
+                {0, 2, 0},
+                {0, 1, 3},
+        };
+        Matrix matrix = new Matrix(data);
+        assertFalse(matrix.is_upper_triangular());
     }
 }

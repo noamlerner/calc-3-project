@@ -250,6 +250,20 @@ public class Matrix {
         return new Matrix(matrix);
     }
 
+    public boolean is_upper_triangular() {
+        if (getNumCols() != getNumRows() || getNumRows() < 2) {
+            return false;
+        }
+        for (int i = 1; i < getNumRows(); i += 1) {
+            for (int j = 0; j < i; j += 1) {
+                if (Math.abs(data[i][j]) > EPSILON) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean equals(Matrix other, double epsilon) {
         for (int i = 0; i < getNumRows(); i += 1) {
             for (int j = 0; j < getNumCols(); j += 1) {
