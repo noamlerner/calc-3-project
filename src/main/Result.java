@@ -1,3 +1,5 @@
+package main;
+
 public class Result<V, E> {
     private E failure;
     private V success;

@@ -1,3 +1,4 @@
+package main;
 
 public class GaussSeidelIterative {
 	Matrix A, b, x;

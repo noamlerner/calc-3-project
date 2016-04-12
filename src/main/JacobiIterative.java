@@ -1,3 +1,4 @@
+package main;
 
 public class JacobiIterative {
 	Matrix A, Dinv, R, b,x; // D is actually the inverse of D cause that's whats needed
