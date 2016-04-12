@@ -9,6 +9,8 @@ import java.util.function.Function;
  ******************************************************************************/
 @SuppressWarnings("unused")
 public class Matrix {
+    public static final double EPSILON = 0.000000000000001;
+
     public final int M;           // number of rows
     public final int N;           // number of columns
     public final double[][] data; // M-by-N array
@@ -261,6 +263,6 @@ public class Matrix {
 
     @Override
     public boolean equals(Object other) {
-        return other != null && other instanceof Matrix && this.equals((Matrix) other, 0.0);
+        return other != null && other instanceof Matrix && this.equals((Matrix) other, EPSILON);
     }
 }
