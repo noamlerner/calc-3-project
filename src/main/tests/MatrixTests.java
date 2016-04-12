@@ -90,4 +90,15 @@ public class MatrixTests {
         Matrix matrix = new Matrix(data);
         assertFalse(matrix.is_col_normal());
     }
+
+    @Test
+    public void givens_1() {
+        double[][] data = {
+            {1,                     0,                      0},
+            {0, Math.cos(Math.PI / 4), -Math.sin(Math.PI / 4)},
+            {0, Math.sin(Math.PI / 4),  Math.cos(Math.PI / 4)},
+        };
+        Matrix answer = new Matrix(data);
+        assertEquals(answer, Matrix.rotation(3, 1, 2, Math.PI / 4));
+    }
 }

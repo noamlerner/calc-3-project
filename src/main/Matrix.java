@@ -33,7 +33,7 @@ public class Matrix {
     }
 
     // copy constructor
-    private Matrix(Matrix A) { this(A.data); }
+    public Matrix(Matrix A) { this(A.data); }
 
     // create and return a random M-by-N matrix with values between 0 and 1
     public static Matrix random(int M, int N) {
@@ -122,6 +122,18 @@ public class Matrix {
      * Everything below this block was coded by the group                  *
      * for this calc 3 project. It was included in this file for ease use  *
      ***********************************************************************/
+
+    public static Matrix rotation(int size, int row, int col, double theta) {
+        Matrix givens = Matrix.identity(size);
+        int sign = col > row ? -1 : 1;
+
+        givens.data[row][row] = Math.cos(theta);
+        givens.data[col][col] = Math.cos(theta);
+        givens.data[row][col] = Math.sin(theta) * sign;
+        givens.data[col][row] = Math.sin(theta) * -sign;
+
+        return givens;
+    }
 
     public int getNumRows() {
         return M;
