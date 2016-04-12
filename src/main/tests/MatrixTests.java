@@ -23,4 +23,21 @@ public class MatrixTests {
         assertEquals(Vector.from_data(11, 15), matrix.getSubColumn(2, 2));
         assertEquals(Vector.from_data(16), matrix.getSubColumn(3, 1));
     }
+
+    @Test
+    public void pad() {
+        double[][] data = {
+            {2, 3},
+            {4, 5},
+        };
+        double[][] answer = {
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 2, 3},
+                {0, 0, 4, 5},
+        };
+        Matrix matrix = new Matrix(data);
+        Matrix correct = new Matrix(answer);
+        assertEquals(correct, matrix.pad_top_left(4));
+    }
 }

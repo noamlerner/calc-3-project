@@ -218,6 +218,36 @@ public class Matrix {
     	return max;
     }
 
+    /**
+     * Pads a smaller matrix with the identity and puts
+     * the smaller matrix in the bottom left corner.
+     * If size is the same as the current size then
+     * the matrix is unchanged.
+     *
+     * So this matrix:
+     * 5 8
+     * 2 1
+     *
+     * Padded with size 3 is:
+     * 1 0 0
+     * 0 5 8
+     * 0 2 1
+     *
+     * @param size of the output Matrix
+     * @return a new size*size padded matrix
+     */
+    public Matrix pad_top_left(int size) {
+        assert getNumCols() == getNumRows();
+        assert size >= getNumCols();
+        double[][] matrix = Matrix.identity(size).data;
+        for (int i = size - getNumRows(), i_m = 0; i < size; i += 1, i_m += 1) {
+            for (int j = size - getNumCols(), j_m = 0; j < size; j += 1, j_m += 1) {
+                matrix[i][j] = this.data[i_m][j_m];
+            }
+        }
+        return new Matrix(matrix);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other != null && other instanceof Matrix) {
