@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by michael on 4/12/16.
@@ -50,6 +49,11 @@ public class GivensRotationTests {
         final int SIZES = 6;
         final int TRIALS = 10000;
 
+        int total = (SIZES - 2) * TRIALS;
+        int ut_count = 0;
+        int cn_count = 0;
+        int ml_count = 0;
+
         for (int size = 2; size < SIZES; size += 1) {
             for (int trial = 0; trial < TRIALS; trial += 1) {
                 Matrix test = Matrix.random(size, size);
@@ -57,11 +61,21 @@ public class GivensRotationTests {
                 assertNotNull(decomposition);
                 assertNotNull(decomposition.q);
                 assertNotNull(decomposition.r);
-                assertTrue("\n" + decomposition.r + "should be upper triangular",
-                          decomposition.r.is_upper_triangular());
-                assertTrue(decomposition.q.is_col_normal());
-                assertEquals(test, decomposition.q.times(decomposition.r));
+                if (decomposition.r.is_upper_triangular()) {
+                    ut_count += 1;
+                }
+                if (decomposition.q.is_col_normal()) {
+                    cn_count += 1;
+                }
+                if (test.equals(decomposition.q.times(decomposition.r))) {
+                    ml_count += 1;
+                }
             }
         }
+
+        System.out.println("Total:            " + total);
+        System.out.println("Upper Triangular: " + ut_count);
+        System.out.println("Column Normal:    " + cn_count);
+        System.out.println("QxR = A:          " + ml_count);
     }
 }

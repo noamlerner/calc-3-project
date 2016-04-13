@@ -124,13 +124,10 @@ public class Matrix {
 
     public static Matrix rotation(int size, int row, int col, double theta) {
         Matrix givens = Matrix.identity(size);
-        int sign = col > row ? -1 : 1;
-
-        givens.data[row][row] = Math.cos(theta);
-        givens.data[col][col] = Math.cos(theta);
-        givens.data[row][col] = Math.sin(theta) * sign;
-        givens.data[col][row] = Math.sin(theta) * -sign;
-
+        givens.data[row][row] =  Math.cos(theta);
+        givens.data[col][col] =  Math.cos(theta);
+        givens.data[row][col] = -Math.sin(theta);
+        givens.data[col][row] =  Math.sin(theta);
         return givens;
     }
 

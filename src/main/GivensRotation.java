@@ -18,17 +18,12 @@ public class GivensRotation {
         Matrix r = new Matrix(matrix);
 
         // zero things one by one, with x being the pivot element and y is what to be zeroed
-        for (int row = 1; row < matrix.getNumRows(); row += 1) {
+        for (int row = r.getNumRows() - 1; row >= 1; row -= 1) {
             for (int col = 0; col < row; col += 1) {
-                if (r.is_upper_triangular()) {
-                    return Result.succeed(new QrDecomp(q, r));
-                }
                 // Get the angle
-                double x = matrix.data[col][col];
-                double y = matrix.data[row][col];
-                double theta = Math.atan2(y, x);
+                double theta = Math.atan2(matrix.data[row][col], matrix.data[col][col]);
                 // Get givens rotation
-                Matrix rotation = Matrix.rotation(matrix.getNumRows(), row, col, theta);
+                Matrix rotation = Matrix.rotation(r.getNumCols(), row, col, theta);
                 // Update Q & R
                 r = rotation.times(r);
                 q = q.times(rotation.transpose());
