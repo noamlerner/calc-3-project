@@ -11,6 +11,15 @@ public class Vector extends Matrix {
         this.length = matrix.length;
     }
 
+    /**
+     * Copy constructor
+     * @param vector to be copied
+     */
+    public Vector(Vector vector) {
+        super(vector.data);
+        this.length = vector.length;
+    }
+
     public static Vector from_matrix(Matrix matrix) {
         assert matrix.getNumCols() == 1;
         return new Vector(matrix.data);
