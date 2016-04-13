@@ -1,6 +1,5 @@
 package main;
 
-import java.util.Arrays;
 import java.util.function.Function;
 
 /******************************************************************************
@@ -9,7 +8,7 @@ import java.util.function.Function;
  ******************************************************************************/
 @SuppressWarnings("unused")
 public class Matrix {
-    public static final double EPSILON = 0.0000000000001;
+    public static final double EPSILON = 0.000000000001;
 
     public final int M;           // number of rows
     public final int N;           // number of columns

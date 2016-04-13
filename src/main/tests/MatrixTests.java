@@ -70,6 +70,19 @@ public class MatrixTests {
     }
 
     @Test
+    public void big_upper_triangular() {
+        double[][] data = {
+            {-1.5783,   -0.8727,   -0.8839,   -0.5633,   -1.0757},
+            { 0.0000,   -0.3798,    0.1130,    0.1435,    0.2806},
+            { 0.0000,   -0.0000,   -0.3668,    0.0197,    0.5008},
+            { 0.0000,    0.0000,   -0.0000,   -0.4442,   -0.3124},
+            { 0.0000,   -0.0000,    0.0000,    0.0000,   -0.6779},
+        };
+        Matrix matrix = new Matrix(data);
+        assertTrue("\n" + matrix + "should be upper triangular", matrix.is_upper_triangular());
+    }
+
+    @Test
     public void col_normal_true() {
         double[][] data = {
             {-INV_SQRT_2,  INV_SQRT_2,            0},

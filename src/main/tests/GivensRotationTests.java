@@ -54,15 +54,13 @@ public class GivensRotationTests {
             for (int trial = 0; trial < TRIALS; trial += 1) {
                 Matrix test = Matrix.random(size, size);
                 QrDecomp decomposition = GivensRotation.qr_fact_givens(test).unwrap();
-                try {
-                    assertNotNull(decomposition);
-                    assertNotNull(decomposition.q);
-                    assertNotNull(decomposition.r);
-                    assertTrue(decomposition.r.is_upper_triangular());
-                    assertTrue(decomposition.q.is_col_normal());
-                    assertEquals(test, decomposition.q.times(decomposition.r));
-                } catch (AssertionError err) {
-                }
+                assertNotNull(decomposition);
+                assertNotNull(decomposition.q);
+                assertNotNull(decomposition.r);
+                assertTrue("\n" + decomposition.r + "should be upper triangular",
+                          decomposition.r.is_upper_triangular());
+                assertTrue(decomposition.q.is_col_normal());
+                assertEquals(test, decomposition.q.times(decomposition.r));
             }
         }
     }

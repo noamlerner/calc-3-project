@@ -53,15 +53,13 @@ public class HouseholderTests {
             for (int trial = 0; trial < TRIALS; trial += 1) {
                 Matrix test = Matrix.random(size, size);
                 QrDecomp decomposition = HouseHolders.qr_fact_house(test).unwrap();
-                try {
-                    assertTrue(decomposition != null);
-                    assertTrue(decomposition.q != null);
-                    assertTrue(decomposition.r != null);
-                    assertTrue(decomposition.r.is_upper_triangular());
-                    assertTrue(decomposition.q.is_col_normal());
-                    assertEquals(test, decomposition.q.times(decomposition.r));
-                } catch (AssertionError err) {
-                }
+                assertTrue(decomposition != null);
+                assertTrue(decomposition.q != null);
+                assertTrue(decomposition.r != null);
+                assertTrue("\n" + decomposition.r + " should be upper triangular",
+                           decomposition.r.is_upper_triangular());
+                assertTrue(decomposition.q.is_col_normal());
+                assertEquals(test, decomposition.q.times(decomposition.r));
             }
         }
     }
