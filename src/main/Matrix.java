@@ -61,6 +61,30 @@ public class Matrix {
     }
 
 	/**
+	 * Return the trace of the matrix.
+     *
+     * @return The trace of the matrix.
+	 */
+	public Double trace() {
+
+		// Sanity check the matrix size.
+		if (N != M) {
+			throw new RuntimeException("Cannot take trace of non-square matrix.");
+		}
+
+		// The result.
+		double result = 0.0;
+
+		// Add the diagnol.
+		for (int i = 0; i < N; i++) {
+			result += this.data[i][i];
+		}
+
+		// Return what we found.
+		return result;
+	}
+
+	/**
 	 * Find the determinant of the matrix.
 	 * - Joshua Songy
      *
