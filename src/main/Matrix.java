@@ -389,4 +389,11 @@ public class Matrix {
         return other != null && other instanceof Matrix && this.equals((Matrix) other, EPSILON);
     }
 
+	public double get(int i, int j) {
+		return this.data[i][j];
+	}
+
+	public void set(int i, int j, double value) {
+		this.data[i][j] = value;
+	}
 }

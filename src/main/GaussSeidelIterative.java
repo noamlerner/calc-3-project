@@ -1,10 +1,11 @@
 package main;
 
-public class GaussSeidelIterative {
+public class GaussSeidelIterative implements Iterative {
 	Matrix A, b, x;
 	double error;
 	int N;
-	public GaussSeidelIterative(Matrix Ab, Matrix u, double epsilon, int M){
+
+	public void iterate(Matrix Ab, Matrix u, double epsilon, int M){
 		init(Ab);
 		// didn't want to find inverse of matrix and its not in library so i did it this way
 		x = new Matrix(u.getData());
@@ -34,11 +35,27 @@ public class GaussSeidelIterative {
 			}
 		}
 		if(!set){
-			x = null;
-			error = -1;
 			N = -1;
+			x = null;
 		}
 	}
+
+	public Vector getSolution(){
+		return new Vector(x);
+	}
+
+	public int getIterations(){
+		return N;
+	}
+
+	public double getError(){
+		return error;
+	}
+
+	public boolean hasTimedOut() {
+		return N == -1;
+	}
+
 	private void init(Matrix Ab) {
 		double [][] aArr = new double [Ab.getNumRows()][Ab.getNumCols()-1];
 		double [][] bArr = new double [Ab.getNumRows()][1];

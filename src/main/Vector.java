@@ -11,6 +11,11 @@ public class Vector extends Matrix {
         this.length = matrix.length;
     }
 
+    public Vector(Matrix matrix) {
+        super(matrix);
+        this.length = matrix.M;
+    }
+
     /**
      * Copy constructor
      * @param vector to be copied
@@ -19,6 +24,38 @@ public class Vector extends Matrix {
         super(vector.data);
         this.length = vector.length;
     }
+
+	/**
+     * Constructs a vector filled with zeros.
+	 * 
+     * @argument length The length of the new vector.
+     */
+	public Vector(int length) {
+
+		// Populate the backing data.
+		super(new Matrix(length, 1));
+
+		// Record length.
+		this.length = length;
+	}
+
+	/**
+     * Constructs a vector filled with passed in elements.
+     *
+     * @argument data The elements of the vector.
+     */
+	public Vector(double[] data) {
+		// Dirty hack.
+		super(new Matrix(data.length, 1));
+
+		// Set our length.
+		this.length = data.length;
+
+		// Copy over elements.
+		for (int i = 0; i < this.length; i++) {
+			this.data[i][0] = data[i];
+		}
+	}
 
     public static Vector from_matrix(Matrix matrix) {
         assert matrix.getNumCols() == 1;
@@ -85,4 +122,24 @@ public class Vector extends Matrix {
         }
         return array;
     }
+
+	/**
+     * Returns an element of the vector.
+     *
+     * @argument index The index of the element.
+     * @return The element of the vector at index.
+	 */
+	public double get(int index) {
+		return this.data[index][0];
+	}
+
+	/**
+     * Set an element of the vector.
+     *
+     * @argument index The index of the element.
+     * @argument value The value to set the element to.
+	 */
+	public void set(int index, double value) {
+		this.data[index][0] = value;
+	}
 }
