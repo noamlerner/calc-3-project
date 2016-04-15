@@ -36,10 +36,10 @@ public class IterativeConvergence {
 
 	// The bounds of the random vectors we want to generate.
 	private static final double randomVectorLowerBound = -10.0;
-	private static final double randomVectorUpperBound = -10.0;
+	private static final double randomVectorUpperBound = 10.0;
 
 	// The number of random vectors to generate.
-	private static final int numRandomVectors = 1000;
+	private static final int numRandomVectors = 100;
 
 	// The tolerance to calculate to.
 	private static final double tolerance = 0.00005;
@@ -326,7 +326,12 @@ public class IterativeConvergence {
 		System.out.println("Average ratio is: " + (runRatio / numRatios));
 	}
 
+	public static void Part2() {
+		
+	}
+
 	public static void main(String[] args) {
 		Part1();
+		Part2();
 	}
 }
