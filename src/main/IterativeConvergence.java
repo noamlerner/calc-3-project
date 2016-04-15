@@ -31,6 +31,30 @@ public class IterativeConvergence {
 			new double[] {39.0 / 40.0, -13.0 / 40.0, 12.0 / 40.0}
 			);
 
+	// A in part 2.
+	private static final Matrix A2 =
+		new Matrix(
+			new double[][] {{1.0, 2.0},
+							{2.0, 1.0}}
+			);
+
+	// B in part 2.
+	private static final Vector B2 =
+		new Vector(
+			new double[] {3.0, 3.0}
+			);
+
+	private static final Vector exactSolution2 =
+		new Vector(
+			new double[] {1.0, 1.0}
+			);
+
+	// The initial guess to use for part 2.
+	private static final Vector initialGuess2 =
+		new Vector(
+			new double[] {10.0, 1.0}
+			);
+
 	// The length of random vectors we want to generate.
 	private static final int randomVectorLength = 3;
 
@@ -178,6 +202,34 @@ public class IterativeConvergence {
 	}
 
 	/**
+     * Returns {A|b}.
+     *
+     * @augment a The matrix.
+     * @augment b The vector.
+     * @return The augmented matrix.
+     */
+	private Matrix augment(Matrix a, Vector b) {
+
+		// The augmented matrix.
+		Matrix augmented = new Matrix(a.M, a.N + 1);
+
+		// Copy the elements from A into the augmented matrix.
+		for (int i = 0; i < a.M; i++) {
+			for (int j = 0; j < a.N; j++) {
+				augmented.set(i, j, a.get(i, j));
+			}
+		}
+
+		// Copy the augmented section.
+		for (int i = 0; i < a.M; i++) {
+			augmented.set(i, a.N, b.get(i));
+		}
+
+		// Return the augmented matrix.
+		return augmented;
+	}
+
+	/**
 	 * Use the recorded iterative method to solve this inital guess.
 	 *
 	 * @argument guess The initial guess.
@@ -187,23 +239,8 @@ public class IterativeConvergence {
 		// Create the container for the results.
 		RunData data = new RunData();
 
-		// The augmented matrix to pass to the iteration.
-		Matrix augmented = new Matrix(A.M, A.N + 1);
-
-		// Copy the elements from A into the augmented matrix.
-		for (int i = 0; i < A.M; i++) {
-			for (int j = 0; j < A.N; j++) {
-				augmented.set(i, j, A.get(i, j));
-			}
-		}
-
-		// Copy the augmented section.
-		for (int i = 0; i < A.M; i++) {
-			augmented.set(i, A.N, B.get(i));
-		}
-			
 		// Run the iterative over the guess.
-		method.iterate(augmented, guess, tolerance, maxIterations);
+		method.iterate(augment(A, B), guess, tolerance, maxIterations);
 
 		// Record the results.
 		data.success = !method.hasTimedOut();
@@ -326,8 +363,52 @@ public class IterativeConvergence {
 		System.out.println("Average ratio is: " + (runRatio / numRatios));
 	}
 
+
+	/**
+     * Return the error from calculating the iteration in part 2, with M max 
+     * retries.
+     *
+     * @argument maxIterations M
+     * @return The error.
+	 */
+	private double calculateError(int maxIterations) {
+		// Run the iterative over the guess.
+		method.iterate(augment(A2, B2), initialGuess2, tolerance, maxIterations);
+
+		// Return the error.
+		return method.getError();
+	}
+
 	public static void Part2() {
-		
+		// jacobi iterative runs.
+		IterativeConvergence jacobi =
+			new IterativeConvergence(
+				new JacobiIterative()
+				);
+
+		// gauss seidel iterative runs.
+		IterativeConvergence gauss =
+			new IterativeConvergence(
+				new GaussSeidelIterative()
+				);
+
+		// Print jacobi errors.
+		for (int i = 2; i <= 10; i++) {
+			System.out.println(
+				"Jacobi error for M="
+				+ i
+				+ " is: "
+				+ jacobi.calculateError(i));
+		}
+
+		// Print gauss errors.
+		for (int i = 2; i <= 10; i++) {
+			System.out.println(
+				"Gauss error for M="
+				+ i
+				+ " is: "
+				+ gauss.calculateError(i));
+		}
 	}
 
 	public static void main(String[] args) {

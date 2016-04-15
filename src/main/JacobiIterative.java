@@ -20,7 +20,6 @@ public class JacobiIterative implements Iterative {
 		}
 		if(!set){
 			x = null;
-			error = -1;
 			N = -1;
 		}
 		

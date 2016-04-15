@@ -36,7 +36,6 @@ public class GaussSeidelIterative implements Iterative {
 		}
 		if(!set){
 			N = -1;
-			error = -1;
 			x = null;
 		}
 	}
