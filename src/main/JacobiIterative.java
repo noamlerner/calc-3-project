@@ -1,10 +1,10 @@
 package main;
 
-public class JacobiIterative {
+public class JacobiIterative implements Iterative {
 	Matrix A, Dinv, R, b,x; // D is actually the inverse of D cause that's whats needed
 	double error;
 	int N;
-	public JacobiIterative(Matrix Ab, Matrix u, double epsilon, int M){
+	public void iterate(Matrix Ab, Matrix u, double epsilon, int M){
 		init(Ab);
 		x = new Matrix(u.getData());
 		boolean set = false;
@@ -25,15 +25,23 @@ public class JacobiIterative {
 		}
 		
 	}
-	public Matrix getSolution(){
-		return x;
+
+	public Vector getSolution(){
+		return new Vector(x);
 	}
+
 	public int getIterations(){
 		return N;
 	}
+
 	public double getError(){
 		return error;
 	}
+
+	public boolean hasTimedOut() {
+		return x == null;
+	}
+
 	private void init(Matrix Ab) {
 		double [][] aArr = new double [Ab.getNumRows()][Ab.getNumCols()-1];
 		double [][] bArr = new double [Ab.getNumRows()][1];
