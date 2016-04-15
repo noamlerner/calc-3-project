@@ -35,9 +35,9 @@ public class GaussSeidelIterative implements Iterative {
 			}
 		}
 		if(!set){
-			x = null;
-			error = -1;
 			N = -1;
+			error = -1;
+			x = null;
 		}
 	}
 
@@ -54,7 +54,7 @@ public class GaussSeidelIterative implements Iterative {
 	}
 
 	public boolean hasTimedOut() {
-		return x == null;
+		return N == -1;
 	}
 
 	private void init(Matrix Ab) {

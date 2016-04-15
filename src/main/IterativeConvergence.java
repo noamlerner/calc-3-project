@@ -276,8 +276,8 @@ public class IterativeConvergence {
 				);
 
 		// Perform the calculations in both.
-		gauss.solveAll(runs);
 		jacobi.solveAll(runs);
+		gauss.solveAll(runs);
 
 		// Calculate the average result for the runData of each.
 		Vector approxJacobi = jacobi.approx();
@@ -303,6 +303,27 @@ public class IterativeConvergence {
 			"Gauss seidel approximate error:\n" +
 			approxGauss.minus(exactSolution).toString()
 			);
+
+		// The average ratio.
+		double runRatio = 0.0;
+
+		// The number of ratios given.
+		double numRatios = 0.0;
+
+		// Find each ratio.
+		for (int i = 0; i < jacobi.runData.size(); i++) {
+
+			if (jacobi.runData.get(i).success && gauss.runData.get(i).success) {
+				double ratio = jacobi.runData.get(i).iterations
+					/ gauss.runData.get(i).iterations;
+				System.out.println("Ratio for vector " + i + " is: " + ratio);
+
+				runRatio += ratio;
+				numRatios++;
+			}
+		}
+
+		System.out.println("Average ratio is: " + (runRatio / numRatios));
 	}
 
 	public static void main(String[] args) {
