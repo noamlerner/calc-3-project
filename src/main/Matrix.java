@@ -60,96 +60,6 @@ public class Matrix {
         return A;
     }
 
-	/**
-	 * Return the trace of the matrix.
-     *
-     * @return The trace of the matrix.
-	 */
-	public Double trace() {
-
-		// Sanity check the matrix size.
-		if (N != M) {
-			throw new RuntimeException("Cannot take trace of non-square matrix.");
-		}
-
-		// The result.
-		double result = 0.0;
-
-		// Add the diagnol.
-		for (int i = 0; i < N; i++) {
-			result += this.data[i][i];
-		}
-
-		// Return what we found.
-		return result;
-	}
-
-	/**
-	 * Find the determinant of the matrix.
-	 * - Joshua Songy
-     *
-     * @return The determinant of the matrix.
-	 */
-	public Double determinant() {
-
-		// Sanity check the matrix size.
-		if (N != M) {
-			throw new RuntimeException("Cannot take determinant of non-square matrix.");
-		}
-
-		// Base case for empty matrix.
-		if (N == 0) {
-			return 1.0;
-		}
-
-		// Base case for 1x1 matrix.
-		if (N == 1) {
-			return this.data[0][0];
-		}
-
-		// Base case for 2x2 matrix.
-		if (N == 2) {
-			return this.data[0][0] * this.data[1][1]
-				- this.data[0][1] * this.data[1][0];
-		}
-
-		// Used to alternate between adding and subtracting.
-		double pivot = 1;
-
-		// The accumulator across the iterations.
-		double accumulator = 0.0;
-
-		// Iterate across top row.
-		for (int i = 0; i < N; i++) {
-
-			// The submatrix to find the determinant of.
-			Matrix subMatrix = new Matrix(M - 1, N - 1);
-
-			// Copy the left part of the submatrix.
-			for (int ii = 0; ii < i; ii++) {
-				for (int j = 1; j < N; j++) {
-					subMatrix.data[ii][j - 1] = this.data[ii][j];
-				}
-			}
-
-			// Copy the right half of the submatrix.
-			for (int ii = i + 1; ii < M; ii++) {
-				for (int j = 1; j < N; j++) {
-					subMatrix.data[ii - 1][j - 1] = this.data[ii][j];
-				}
-			}
-
-			// Recurse.
-			accumulator += this.data[i][0] * pivot * subMatrix.determinant();
-
-			// Invert the pivot.
-			pivot *= -1;
-		}
-
-		// Return the result.
-		return accumulator;
-	}
-
     // return C = A + B
     public Matrix plus(Matrix B) {
         Matrix A = this;
@@ -211,18 +121,114 @@ public class Matrix {
      * Everything below this block was coded by the group                  *
      * for this calc 3 project. It was included in this file for ease use  *
      ***********************************************************************/
-    public Matrix inverse(){
-    	LUFactorization lu = new LUFactorization(this);
-    	Matrix I = Matrix.identity(this.getNumCols());
-    	Matrix inverse = new Matrix(M,M);
-    	for(int i = 0; i < this.getNumCols(); i++){
-    		Matrix e = new Matrix(M,1);
-    		e.setCol(0, I.getCol(i));
-    		Matrix v = lu.solveFor(e);
-    		inverse.setCol(i, v.getCol(0));
-    	}
-    	return inverse;
+
+    /**
+     * Find the determinant of the matrix.
+     * - Joshua Songy
+     *
+     * @return The determinant of the matrix.
+     */
+    public Double determinant() {
+        // Sanity check the matrix size.
+        if (N != M) {
+            throw new RuntimeException("Cannot take determinant of non-square matrix.");
+        }
+
+        // Base case for empty matrix.
+        if (N == 0) {
+            return 1.0;
+        }
+
+        // Base case for 1x1 matrix.
+        if (N == 1) {
+            return this.data[0][0];
+        }
+
+        // Base case for 2x2 matrix.
+        if (N == 2) {
+            return this.data[0][0] * this.data[1][1]
+                - this.data[0][1] * this.data[1][0];
+        }
+
+        // Used to alternate between adding and subtracting.
+        double pivot = 1;
+
+        // The accumulator across the iterations.
+        double accumulator = 0.0;
+
+        // Iterate across top row.
+        for (int i = 0; i < N; i++) {
+
+            // The submatrix to find the determinant of.
+            Matrix subMatrix = new Matrix(M - 1, N - 1);
+
+            // Copy the left part of the submatrix.
+            for (int ii = 0; ii < i; ii++) {
+                for (int j = 1; j < N; j++) {
+                    subMatrix.data[ii][j - 1] = this.data[ii][j];
+                }
+            }
+
+            // Copy the right half of the submatrix.
+            for (int ii = i + 1; ii < M; ii++) {
+                for (int j = 1; j < N; j++) {
+                    subMatrix.data[ii - 1][j - 1] = this.data[ii][j];
+                }
+            }
+
+            // Recurse.
+            accumulator += this.data[i][0] * pivot * subMatrix.determinant();
+
+            // Invert the pivot.
+            pivot *= -1;
+        }
+
+        // Return the result.
+        return accumulator;
     }
+
+    /**
+     * Return the trace of the matrix.
+     *
+     * @return The trace of the matrix.
+     */
+    public Double trace() {
+
+        // Sanity check the matrix size.
+        if (N != M) {
+            throw new RuntimeException("Cannot take trace of non-square matrix.");
+        }
+
+        // The result.
+        double result = 0.0;
+
+        // Add the diagnol.
+        for (int i = 0; i < N; i++) {
+            result += this.data[i][i];
+        }
+
+        // Return what we found.
+        return result;
+    }
+
+    /***********************************************************************
+     * Everything below this block was coded by the group                  *
+     * for this calc 3 project. It was included in this file for ease use  *
+     ***********************************************************************/
+
+    public Matrix inverse(){
+        LUFactorization lu = new LUFactorization(this);
+        Matrix I = Matrix.identity(this.getNumCols());
+        Matrix inverse = new Matrix(M,M);
+        for(int i = 0; i < this.getNumCols(); i++){
+            Matrix e = new Matrix(M,1);
+            e.setCol(0, I.getCol(i));
+            Matrix v = lu.solveFor(e);
+            inverse.setCol(i, v.getCol(0));
+        }
+        return inverse;
+    }
+
     public static Matrix rotation(int size, int row, int col, double theta) {
         Matrix givens = Matrix.identity(size);
         givens.data[row][row] =  Math.cos(theta);
@@ -318,15 +324,15 @@ public class Matrix {
     }
 
     public double getMaxNorm(){
-    	double max = 0;
-    	double temp;
-    	for(int i = 0; i < data.length; i++){
-    		for(int j = 0; j < data[i].length; j++){
-    			temp = Math.abs(data[i][j]);
-    			max = temp > max ? temp : max;
-    		}
-    	}
-    	return max;
+        double max = 0;
+        double temp;
+        for(int i = 0; i < data.length; i++){
+            for(int j = 0; j < data[i].length; j++){
+                temp = Math.abs(data[i][j]);
+                max = temp > max ? temp : max;
+            }
+        }
+        return max;
     }
 
     /**
@@ -400,11 +406,11 @@ public class Matrix {
         return other != null && other instanceof Matrix && this.equals((Matrix) other, EPSILON);
     }
 
-	public double get(int i, int j) {
-		return this.data[i][j];
-	}
+    public double get(int i, int j) {
+        return this.data[i][j];
+    }
 
-	public void set(int i, int j, double value) {
-		this.data[i][j] = value;
-	}
+    public void set(int i, int j, double value) {
+        this.data[i][j] = value;
+    }
 }
