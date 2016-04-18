@@ -8,7 +8,7 @@ import java.util.function.Function;
  ******************************************************************************/
 @SuppressWarnings("unused")
 public class Matrix {
-    public static final double EPSILON = 0.000000000001;
+    public static final double EPSILON = 0.000001;
 
     public final int M;           // number of rows
     public final int N;           // number of columns
@@ -211,7 +211,18 @@ public class Matrix {
      * Everything below this block was coded by the group                  *
      * for this calc 3 project. It was included in this file for ease use  *
      ***********************************************************************/
-
+    public Matrix inverse(){
+    	LUFactorization lu = new LUFactorization(this);
+    	Matrix I = Matrix.identity(this.getNumCols());
+    	Matrix inverse = new Matrix(M,M);
+    	for(int i = 0; i < this.getNumCols(); i++){
+    		Matrix e = new Matrix(M,1);
+    		e.setCol(0, I.getCol(i));
+    		Matrix v = lu.solveFor(e);
+    		inverse.setCol(i, v.getCol(0));
+    	}
+    	return inverse;
+    }
     public static Matrix rotation(int size, int row, int col, double theta) {
         Matrix givens = Matrix.identity(size);
         givens.data[row][row] =  Math.cos(theta);
