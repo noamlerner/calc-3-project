@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Arrays;
+
 public class LUFactorization {
 	Matrix A;
 	Matrix L;
@@ -12,7 +14,6 @@ public class LUFactorization {
 		}
 		L = new Matrix(A.getNumRows(),A.getNumRows());
 		U = new Matrix(A.getData());
-		System.out.println(A);
 		for(int i = 0; i < U.getNumCols();i++){
 			double [] col = U.getCol(i);
 			double div = col[i];
@@ -74,15 +75,17 @@ public class LUFactorization {
 			}
 		}
 		
-		double [][] x = new double[1][y.length];
-		for(int i = x[0].length -1; i >=0; i--){
-			x[0][i] = y[i];
-			for(int j = x[0].length-1; j >i; j--){
-				x[0][i] -= U.getRow(i)[j] * x[0][j];
+		double [] x = new double[y.length];
+		for(int i = x.length -1; i >=0; i--){
+			x[i] = y[i];
+			for(int j = x.length-1; j >i; j--){
+				x[i] -= U.getRow(i)[j] * x[j];
 			}
-			x[0][i] /= U.getRow(i)[i];
+			x[i] /= U.getRow(i)[i];
 		}
-		return new Matrix(x);
+		Matrix s = new Matrix(x.length,1);
+		s.setCol(0, x);
+		return s;
 	}
 }
  
