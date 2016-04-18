@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by michael on 4/12/16.
@@ -25,16 +26,16 @@ public class GivensRotationTests {
         Matrix matrix = new Matrix(data);
 
         double[][] q_data = {
-            { INV_SQRT_2,  0, -INV_SQRT_2},
-            {          0, -1,           0},
-            {-INV_SQRT_2,  0, -INV_SQRT_2},
+            {-INV_SQRT_2, 0, -INV_SQRT_2},
+            {          0, 1,           0},
+            { INV_SQRT_2, 0, -INV_SQRT_2},
         };
         Matrix q = new Matrix(q_data);
 
         double[][] r_data = {
-            {-SQRT_2, -SQRT_2,  INV_SQRT_2},
-            {      0,      -1,          -1},
-            {      0,       0, -INV_SQRT_2},
+            { SQRT_2, SQRT_2, -INV_SQRT_2},
+            {      0,      1,           1},
+            {      0,      0, -INV_SQRT_2},
         };
         Matrix r = new Matrix(r_data);
 
@@ -49,11 +50,6 @@ public class GivensRotationTests {
         final int SIZES = 6;
         final int TRIALS = 10000;
 
-        int total = (SIZES - 2) * TRIALS;
-        int ut_count = 0;
-        int cn_count = 0;
-        int ml_count = 0;
-
         for (int size = 2; size < SIZES; size += 1) {
             for (int trial = 0; trial < TRIALS; trial += 1) {
                 Matrix test = Matrix.random(size, size);
@@ -61,21 +57,10 @@ public class GivensRotationTests {
                 assertNotNull(decomposition);
                 assertNotNull(decomposition.q);
                 assertNotNull(decomposition.r);
-                if (decomposition.r.is_upper_triangular()) {
-                    ut_count += 1;
-                }
-                if (decomposition.q.is_col_normal()) {
-                    cn_count += 1;
-                }
-                if (test.equals(decomposition.q.times(decomposition.r))) {
-                    ml_count += 1;
-                }
+                assertTrue(decomposition.r.is_upper_triangular());
+                assertTrue(decomposition.q.is_col_normal());
+                assertEquals(test, decomposition.q.times(decomposition.r));
             }
         }
-
-        System.out.println("Total:            " + total);
-        System.out.println("Upper Triangular: " + ut_count);
-        System.out.println("Column Normal:    " + cn_count);
-        System.out.println("QxR = A:          " + ml_count);
     }
 }
