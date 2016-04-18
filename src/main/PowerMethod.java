@@ -11,11 +11,14 @@ public class PowerMethod {
         public final double value;
         public final Vector vector;
         public final int iteration;
+		public final boolean timedOut;
 
-        public EigenEstimate(double value, Vector vector, int iter) {
+        public EigenEstimate(double value, Vector vector, int iter,
+							 boolean timedOut) {
             this.value = value;
             this.vector = vector;
             this.iteration = iter;
+			this.timedOut = timedOut;
         }
 
         @Override
@@ -52,6 +55,14 @@ public class PowerMethod {
             guess = next_vec;
             eigen = next_val;
         }
-        return Result.succeed(new EigenEstimate(eigen, guess.norm(), i));
+
+        return Result.succeed(
+			new EigenEstimate(
+				eigen,
+				guess.norm(),
+				i,
+				(i == iterations) && (error > tolerance * 0.5)
+			)
+		);
     }
 }
