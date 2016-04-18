@@ -19,6 +19,10 @@ public class PowerConvergence {
 							{ 2.0, 1.0, -2.0}}
 			);
 
+	// The given PDF answers.
+	private static final double p1 = -(1.0 + 4.0) / 2.0;
+	private static final double p2 = (1.0 + 4.0) / 2.0;
+
 	// The tolerance to calculate to.
 	private static final double tolerance = 0.00005;
 
@@ -32,6 +36,9 @@ public class PowerConvergence {
 	// Range of random matrices.
 	private static final double randomMatrixUpperBound = 2.0;
 	private static final double randomMatrixLowerBound = -2.0;
+
+	// u0 from pdf.
+	private static final Vector u0 = new Vector(new double[] {1.0, 0.0, 0.0});
 
 	// Max iterations.
 	private static final int maxIterations = 100;
@@ -272,10 +279,12 @@ public class PowerConvergence {
 		// Print the results so we can make a graph.
 		for (RunData data: pm.runData) {
 			if (data.success) {
+
 				System.out.println(
 					"Determinant: " + data.target.determinant()
 					+ " Trace: " + data.target.trace()
 					+ " Iterations: " + data.iterations);
+
 				System.out.println(
 					"Determinant: " + data.inverse.determinant()
 					+ " Trace: " + data.inverse.trace()
@@ -284,7 +293,42 @@ public class PowerConvergence {
 		}
 	}
 
+	public static void Part2() {
+
+		// Precomputed (A-p1I)^-1
+		Matrix p1precomputed = A.minus(
+			Matrix.identity(A.M).multiply_scalar(p1));
+
+		// Precomputed (A-p2I)^-1
+		Matrix p2precomputed = A.minus(
+			Matrix.identity(A.M).multiply_scalar(p2));
+
+		Result<PowerMethod.EigenEstimate, PowerMethod.PowerMethodErr> result =
+			PowerMethod.power_method(
+				p1precomputed,
+				u0,
+				u0,
+				tolerance,
+				maxIterations
+			);
+
+		result =
+			PowerMethod.power_method(
+				p2precomputed,
+				u0,
+				u0,
+				tolerance,
+				maxIterations
+			);
+
+		System.out.println(result.unwrap().value);
+		System.out.println(result.unwrap().value);
+		
+	}
+
 	public static void main(String[] args) {
 		Part1();
+		System.out.println("=====");
+		Part2();
 	}
 }
