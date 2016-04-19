@@ -42,11 +42,19 @@ public class CLI {
 			}
 		} catch(Exception e){
 			System.out.println(e.getMessage());
+			System.out.println("type help for a list of options and the arguments required");
 			System.exit(1);
 		}
 	}
-	private static String lu_fact(){
-		return "";
+	public static void check_arg_length(String [] args, int argLength){
+		if(args.length != argLength){
+			throw new Error("You did not pass in the correct amount of arguments for the command you chose");
+		}
+	}
+	private static String lu_fact(String filePath){
+		Matrix A = new Matrix(5,5);
+		LUFactorization lu = new LUFactorization(A);
+		return "L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror:\n"+lu.getError();
 	}
 	private static String qr_fact_house(){
 		return "";
