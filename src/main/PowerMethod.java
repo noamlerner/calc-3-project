@@ -4,7 +4,20 @@ public class PowerMethod {
     public enum PowerMethodErr {
         MatrixNotSquare,
         InvalidGuestVecDim,
-        InvalidAuxVecDim,
+        InvalidAuxVecDim;
+
+        @Override
+        public String toString() {
+            if (this == MatrixNotSquare) {
+                return "The matrix was not square.";
+            } else if (this == InvalidGuestVecDim) {
+                return "The dimensions of the guess vector did not match the matrix's";
+            } else if (this == InvalidAuxVecDim) {
+                return "The dimensions of the auxiliary vector did not match the matrix's";
+            } else {
+                return "Unkown error.";
+            }
+        }
     }
 
     public static class EigenEstimate {

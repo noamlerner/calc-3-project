@@ -16,7 +16,7 @@ public class DatParser {
    
     }
 
-    public static Matrix vector_from_path(String path) throws Exception {
+    public static Vector vector_from_path(String path) throws Exception {
         Matrix matrix = matrix_from_path(path);
         if (matrix.getNumCols() != 1) {
             throw new Exception("File does not contain a valid vector.");
