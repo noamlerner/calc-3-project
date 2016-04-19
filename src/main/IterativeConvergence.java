@@ -351,8 +351,8 @@ public class IterativeConvergence {
 		for (int i = 0; i < jacobi.runData.size(); i++) {
 
 			if (jacobi.runData.get(i).success && gauss.runData.get(i).success) {
-				double ratio = jacobi.runData.get(i).iterations
-					/ gauss.runData.get(i).iterations;
+				double ratio = (double)jacobi.runData.get(i).iterations
+					/ (double) gauss.runData.get(i).iterations;
 				System.out.println("Ratio for vector " + i + " is: " + ratio);
 
 				runRatio += ratio;
