@@ -52,7 +52,7 @@ public class IterativeConvergence {
 	// The initial guess to use for part 2.
 	private static final Vector initialGuess2 =
 		new Vector(
-			new double[] {10.0, 1.0}
+			new double[] {10.0, 2.0}
 			);
 
 	// The length of random vectors we want to generate.
