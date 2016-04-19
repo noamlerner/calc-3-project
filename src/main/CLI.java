@@ -5,7 +5,8 @@ public class CLI {
 		try{		
 			switch(args[0]){
 				case "lu_fact":
-					System.out.println(lu_fact());
+					check_arg_length(args, 2);
+					System.out.println(lu_fact(args));
 					break;
 				case "qr_fact_house":
 					System.out.println(qr_fact_house());
@@ -14,7 +15,8 @@ public class CLI {
 					System.out.println(qr_fact_givens());
 					break;
 				case "solve_lu":
-					System.out.println(solve_lu());
+					check_arg_length(args, 2);
+					System.out.println(solve_lu(args));
 					break;
 				case "solve_qr_house":
 					System.out.println(solve_qr_house());
@@ -23,10 +25,12 @@ public class CLI {
 					System.out.println(solve_qr_givens());
 					break;
 				case "jacobi_iter":
-					System.out.println(jacobi_iter());
+					check_arg_length(args, 5);
+					System.out.println(jacobi_iter(args));
 					break;
 				case "gs_iter":
-					System.out.println(gs_iter());
+					check_arg_length(args, 5);
+					System.out.println(gs_iter(args));
 					break;
 				case "power_method":
 					System.out.println(power_method());
@@ -37,7 +41,7 @@ public class CLI {
 					System.out.println(help());
 					break;
 				default:
-					System.err.println(invalidString());
+					invalidString();
 					break;
 			}
 		} catch(Exception e){
@@ -51,7 +55,7 @@ public class CLI {
 			throw new Error("You did not pass in the correct amount of arguments for the command you chose");
 		}
 	}
-	private static String lu_fact(String filePath){
+	private static String lu_fact(String [] args){
 		Matrix A = new Matrix(5,5);
 		LUFactorization lu = new LUFactorization(A);
 		return "L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror:\n"+lu.getError();
@@ -62,8 +66,11 @@ public class CLI {
 	private static String qr_fact_givens(){
 		return "";
 	}
-	private static String solve_lu(){
-		return "";
+	private static String solve_lu(String [] args){
+		Matrix Ab = new Matrix(5,5);
+		LUSolver lus = new LUSolver();
+		Vector x = lus.solve(Ab);
+		return "Solution: \n" + x;
 	}
 	private static String solve_qr_house(){
 		return "";
@@ -71,19 +78,42 @@ public class CLI {
 	private static String solve_qr_givens(){
 		return "";
 	}
-	private static String jacobi_iter(){
-		return "";
+	private static String jacobi_iter(String [] args){
+		double epsilon = Double.parseDouble(args[3]);
+		int M = Integer.parseInt(args[4]);
+		Matrix Ab = new Matrix(5,6);
+		Matrix u = new Matrix(5,1);
+		JacobiIterative ji = new JacobiIterative();
+		ji.iterate(Ab, u, epsilon, M);
+		return "Solution: \n" + ji.getSolution() + "\nIterations\n" + ji.getIterations() + "\nError\n" + ji.getError();
 	}
-	private static String gs_iter(){
-		return "";
+	private static String gs_iter(String [] args){
+		double epsilon = Double.parseDouble(args[3]);
+		int M = Integer.parseInt(args[4]);
+		Matrix Ab = new Matrix(5,6);
+		Matrix u = new Matrix(5,1);
+		GaussSeidelIterative gs = new GaussSeidelIterative();
+		gs.iterate(Ab, u, epsilon, M);
+		return "Solution: \n" + gs.getSolution() + "\nIterations\n" + gs.getIterations() + "\nError\n" + gs.getError();
 	}
 	private static String power_method(){
 		return "";
 	}
 	private static String help(){
-		return "";
+		String filePathToMatrix = "a filepath to a file containing a matrix";
+		String filePathToU = "a filepath to a file containing the initial vector";
+		String epsIter = "a small positive tolerance number\n\t\ta positive integer "
+				+ "for the maximum number of iterations";
+		return "usage: the first argument needs to be the method you want to use followed by the commands."
+				+ "The possible commands along with their paramters are:"
+				+ "\ncommands: lu_fact qr_fact_house qr_fact_givens \n\t arguments:\n\t\t" + filePathToMatrix
+				+ "\ncommands: solve_qr_house solve_lu solve_qr_givens \n\t arguments:\n\t\t" + filePathToMatrix
+				+ "\n\t\t"+filePathToU+"\n\t\t" + epsIter
+				+ "\ncommands:power_method \n\t arguments:\n\t\t" + filePathToMatrix
+				+ "\n\t\t" + filePathToU + "\n\t\ta filepath to a file containing the auxilary vector"
+				+ "\n\t\t" + epsIter;
 	}
-	private static String invalidString(){
-		return "";
+	private static void invalidString(){
+		throw new Error("The command you passed in was invalid");
 	}
 }
