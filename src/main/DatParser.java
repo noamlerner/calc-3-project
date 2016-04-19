@@ -10,26 +10,18 @@ import java.util.stream.Collectors;
  */
 public class DatParser {
 
-    public static Result<Matrix, Exception> matrix_from_path(String path) {
-        try {
-            // Make a reader
-            BufferedReader reader = new BufferedReader(new FileReader(path));
-            return Result.succeed(matrix_from_reader(reader));
-        } catch (Exception err) {
-            return Result.fail(err);
-        }
+    public static Matrix matrix_from_path(String path) throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        return matrix_from_reader(reader);
+   
     }
 
-    public static Result<Vector, Exception> vector_from_path(String path) {
-        Result<Matrix, Exception> result = matrix_from_path(path);
-        if (result.is_err()) {
-            return Result.fail(result.unwrap_err());
-        }
-        Matrix matrix = result.unwrap();
+    public static Matrix vector_from_path(String path) throws Exception {
+        Matrix matrix = matrix_from_path(path);
         if (matrix.getNumCols() != 1) {
-            return Result.fail(new Exception("File does not contain a valid vector."));
+            throw new Exception("File does not contain a valid vector.");
         }
-        return Result.succeed(Vector.from_matrix(matrix));
+        return Vector.from_matrix(matrix);
     }
 
     public static Matrix matrix_from_reader(BufferedReader reader) throws Exception {
