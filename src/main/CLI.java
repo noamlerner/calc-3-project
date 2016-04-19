@@ -55,8 +55,8 @@ public class CLI {
 			throw new Error("You did not pass in the correct amount of arguments for the command you chose");
 		}
 	}
-	private static String lu_fact(String [] args){
-		Matrix A = new Matrix(5,5);
+	private static String lu_fact(String [] args) throws Exception{
+		Matrix A = DatParser.matrix_from_path(args[1]);
 		LUFactorization lu = new LUFactorization(A);
 		return "L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror:\n"+lu.getError();
 	}
@@ -66,8 +66,8 @@ public class CLI {
 	private static String qr_fact_givens(){
 		return "";
 	}
-	private static String solve_lu(String [] args){
-		Matrix Ab = new Matrix(5,5);
+	private static String solve_lu(String [] args) throws Exception{
+		Matrix Ab = DatParser.matrix_from_path(args[1]);
 		LUSolver lus = new LUSolver();
 		Vector x = lus.solve(Ab);
 		return "Solution: \n" + x;
@@ -78,20 +78,20 @@ public class CLI {
 	private static String solve_qr_givens(){
 		return "";
 	}
-	private static String jacobi_iter(String [] args){
+	private static String jacobi_iter(String [] args) throws Exception{
 		double epsilon = Double.parseDouble(args[3]);
 		int M = Integer.parseInt(args[4]);
-		Matrix Ab = new Matrix(5,6);
-		Matrix u = new Matrix(5,1);
+		Matrix Ab = DatParser.matrix_from_path(args[1]);
+		Matrix u = DatParser.matrix_from_path(args[2]);
 		JacobiIterative ji = new JacobiIterative();
 		ji.iterate(Ab, u, epsilon, M);
 		return "Solution: \n" + ji.getSolution() + "\nIterations\n" + ji.getIterations() + "\nError\n" + ji.getError();
 	}
-	private static String gs_iter(String [] args){
+	private static String gs_iter(String [] args) throws Exception{
 		double epsilon = Double.parseDouble(args[3]);
 		int M = Integer.parseInt(args[4]);
-		Matrix Ab = new Matrix(5,6);
-		Matrix u = new Matrix(5,1);
+		Matrix Ab = DatParser.matrix_from_path(args[1]);
+		Matrix u = DatParser.matrix_from_path(args[2]);
 		GaussSeidelIterative gs = new GaussSeidelIterative();
 		gs.iterate(Ab, u, epsilon, M);
 		return "Solution: \n" + gs.getSolution() + "\nIterations\n" + gs.getIterations() + "\nError\n" + gs.getError();
