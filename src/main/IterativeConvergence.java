@@ -49,7 +49,7 @@ public class IterativeConvergence {
 			new double[] {1.0, 1.0}
 			);
 
-	// The initial guess to use for part 2.
+	// The initial guess to use for part 2.	
 	private static final Vector initialGuess2 =
 		new Vector(
 			new double[] {10.0, 2.0}
@@ -328,7 +328,7 @@ public class IterativeConvergence {
 
 		System.out.println(
 			"Jacobi approximate error:\n" +
-			approxJacobi.minus(exactSolution).toString()
+			approxJacobi.minus(exactSolution).getMaxNorm()
 			);
 
 		System.out.println(
@@ -338,7 +338,7 @@ public class IterativeConvergence {
 
 		System.out.println(
 			"Gauss seidel approximate error:\n" +
-			approxGauss.minus(exactSolution).toString()
+			approxGauss.minus(exactSolution).getMaxNorm()
 			);
 
 		// The average ratio.
