@@ -312,6 +312,8 @@ public class PowerConvergence {
                 maxIterations
             );
 
+        System.out.println(result.unwrap().value);
+
         result =
             PowerMethod.power_method(
                 p2precomputed,
@@ -321,7 +323,6 @@ public class PowerConvergence {
                 maxIterations
             );
 
-        System.out.println(result.unwrap().value);
         System.out.println(result.unwrap().value);
 
     }
