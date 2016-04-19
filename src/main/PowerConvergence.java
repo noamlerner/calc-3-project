@@ -203,11 +203,7 @@ public class PowerConvergence {
                 PowerMethod.power_method(
                     target,
                     guess,
-                    new Vector(
-                        new double[] {randomInRange(0.0, 1.0),
-                                      randomInRange(0.0, 1.0),
-                                      randomInRange(0.0, 1.0)}
-                        ),
+                    guess,
                     tolerance,
                     maxIterations
                     );
@@ -216,11 +212,7 @@ public class PowerConvergence {
                 PowerMethod.power_method(
                     data.inverse,
                     guess,
-                    new Vector(
-                        new double[] {randomInRange(0.0, 1.0),
-                                      randomInRange(0.0, 1.0),
-                                      randomInRange(0.0, 1.0)}
-                        ),
+                    guess,
                     tolerance,
                     maxIterations
                     );
