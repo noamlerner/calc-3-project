@@ -29,6 +29,17 @@ public class LUSolver implements Solver {
 		// Return the solution.
 		return new Vector(solver.solveFor(b));
 	}
+	public Vector solve(Matrix ab) {
+		Matrix a = new Matrix(ab.getNumRows(),ab.getNumCols()-1);
+		for(int i = 0; i < ab.getNumCols()-1; i++){
+			a.setCol(i, ab.getCol(i));
+		}
+		Matrix bMatr = new Matrix(ab.getNumRows(),1);
+		bMatr.setCol(0, ab.getCol(ab.getNumCols()-1));
+		
+		Vector b = new Vector(bMatr);
+		return this.solve(a,b);
+	}
 
 	/**
      * Returns the name of this method.
