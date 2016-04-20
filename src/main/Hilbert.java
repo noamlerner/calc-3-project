@@ -83,9 +83,10 @@ public class Hilbert {
 				Vector solution = method.solve(hilbert, target);
 
 				// Find the error.
-				Vector error = hilbert
+				double error = hilbert
 					.times(solution)
-					.plus(target.multiply_scalar(-1.0));
+					.minus(target)
+					.getMaxNorm();
 
 				// Print results.
 				System.out.println(
@@ -96,14 +97,14 @@ public class Hilbert {
 					+ "Solution is:\n"
 					+ solution.toString()
 					+ "Error is:\n"
-					+ error.toString()
+					+ error
 					);
 
 				// Print out factorization error if needed.
 				if (method.hasFactorization()) {
 					System.out.println(
 						"Factorization error is: \n"
-						+ method.factorization(hilbert).plus(hilbert.multiply_scalar(-1.0)).toString()
+						+ method.factorization(hilbert).minus(hilbert).getMaxNorm()
 									   );
 				}
 			}
