@@ -1,7 +1,0 @@
-LU Factorization fails for this matrix:
-{
-	{1,2,0},
-	{3,6,-1},
-	{1,2,1}
-}
-something to do with 0's in the second column when building L and how to handle that
