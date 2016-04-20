@@ -162,7 +162,7 @@
 	<g id="gnuplot_plot_1" ><title>A</title>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
 	<g transform="translate(430.2,39.2)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
-		<text><tspan font-family="Arial" >A</tspan></text>
+		<text></text>
 	</g>
 	<use xlink:href='#gpPt0' transform='translate(241.0,180.3) scale(9.00)' color='rgb(126,   4, 255)'/>
 	<use xlink:href='#gpPt0' transform='translate(276.9,51.3) scale(9.00)' color='rgb( 71,   0, 120)'/>
