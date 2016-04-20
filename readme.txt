@@ -2,18 +2,18 @@
 # RUNNING THE PROGRAM #
 #######################
 
-To run the program, from the root of the project:
-   `java -jar cli.jar'
+To run the program, type this into your command prompt from the root of the project:
+	`java -jar cli.jar'
+	(Note, this will not run anything because no arguments are passed in, arguments are addressed below.)
 
 To see a list of commands and their arguments:
-   `java -jar cli.jar help'
+	'java -jar cli.jar help'
 
 Each command name matches the function names from the pdf:
-	 e.x. "solve_lu" matches "solve_lu" from the pdf.
-	 To run any command:
-	 `java -jar cli.jar <command_name> <args seperated by spaces>'
-	 	e.x.    `java -jar cli.jar lu_fact A.dat' 
-	 		in this example, A.dat is a dat file containing a matrix. The file is located in the same directory as the jar file.
+	e.x. "solve_lu" matches "solve_lu" from the pdf.
+	To run any command: `java -jar cli.jar <command_name> <args seperated by spaces>'
+		e.x.    `java -jar cli.jar lu_fact A.dat' 
+			in this example, A.dat is a dat file containing a matrix. The file is located in the same directory as the jar file.
 
 There are in additional 3 commands:
 	`java -jar cli.jar hilbert'
