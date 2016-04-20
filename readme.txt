@@ -2,6 +2,11 @@
 # RUNNING THE PROGRAM #
 #######################
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!                IMPORTANT                 !
+! You must run these commands using Java 8 !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 To run the program, type this into your command prompt from the root of the project:
 	`java -jar cli.jar'
 	(Note, this will not run anything because no arguments are passed in, arguments are addressed below.)
