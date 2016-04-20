@@ -19,7 +19,9 @@ public class InverseTest {
 		Matrix A = Matrix.random(size, size);
 		Matrix invA = A.inverse();
 		Matrix I = Matrix.identity(size);
-		assertEquals(A.times(invA), I);
-		assertEquals(invA.times(A), I);
+		// AA-1 = I
+		assertEquals(I,A.times(invA));
+		//A-1A=I
+		assertEquals(I,invA.times(A));
 	}
 }
