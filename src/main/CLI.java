@@ -9,7 +9,6 @@ public class CLI {
 		try {
 			switch(args[0]) {
 				case "lu_fact":
-					check_arg_length(args, 2);
 					System.out.println(lu_fact(args));
 					break;
 				case "qr_fact_house":
@@ -19,7 +18,6 @@ public class CLI {
 					System.out.println(qr_fact_givens(args));
 					break;
 				case "solve_lu":
-					check_arg_length(args, 2);
 					System.out.println(solve_lu(args));
 					break;
 				case "solve_qr_house":
@@ -29,11 +27,9 @@ public class CLI {
 					System.out.println(solve_qr_givens(args));
 					break;
 				case "jacobi_iter":
-					check_arg_length(args, 5);
 					System.out.println(jacobi_iter(args));
 					break;
 				case "gs_iter":
-					check_arg_length(args, 5);
 					System.out.println(gs_iter(args));
 					break;
 				case "power_method":
@@ -65,21 +61,21 @@ public class CLI {
         check_arg_length(args, 2);
 		Matrix A = DatParser.matrix_from_path(args[1]);
 		LUFactorization lu = new LUFactorization(A);
-		return "L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror:\n"+lu.getError();
+		return "A:\n"+A+"L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror:\n"+lu.getError();
 	}
 
 	private static String qr_fact_house(String[] args) throws Exception {
         check_arg_length(args, 2);
         Matrix matrix = DatParser.matrix_from_path(args[1]);
         QrDecomp decomp = HouseHolders.qr_fact_house(matrix).unwrap();
-        return "Q:\n" + decomp.q + "\nR:\n" + decomp.r;
+        return "A:\n"+matrix+"Q:\n" + decomp.q + "\nR:\n" + decomp.r;
 	}
 
 	private static String qr_fact_givens(String[] args) throws Exception {
         check_arg_length(args, 2);
         Matrix matrix = DatParser.matrix_from_path(args[1]);
         QrDecomp decomp = HouseHolders.qr_fact_house(matrix).unwrap();
-        return "Q:\n" + decomp.q + "\nR:\n" + decomp.r;
+        return "A:\n"+matrix+"Q:\n" + decomp.q + "\nR:\n" + decomp.r;
 	}
 
 	private static String solve_lu(String [] args) throws Exception{
@@ -87,7 +83,7 @@ public class CLI {
 		Matrix Ab = DatParser.matrix_from_path(args[1]);
 		LUSolver lus = new LUSolver();
 		Vector x = lus.solve(Ab);
-		return "Solution: \n" + x;
+		return "Ab:\n"+Ab+"Solution: \n" + x;
 	}
 
 	private static String solve_qr_house(String[] args) throws Exception {
@@ -103,7 +99,7 @@ public class CLI {
         Matrix system = new Matrix(system_data);
         Solver solver = new HouseHolderSolver();
         Vector solution = solver.solve(system, b);
-        return "Solution:\n" + solution;
+        return "Ab:\n"+matrix+"Solution:\n" + solution;
 	}
 
 	private static String solve_qr_givens(String[] args) throws Exception {
@@ -119,7 +115,7 @@ public class CLI {
         Matrix system = new Matrix(system_data);
         Solver solver = new GivensSolver();
         Vector solution = solver.solve(system, b);
-        return "Solution:\n" + solution;
+        return "Ab:\n"+matrix+"Solution:\n" + solution;
 	}
 
 	private static String jacobi_iter(String [] args) throws Exception{
@@ -130,7 +126,7 @@ public class CLI {
 		Matrix u = DatParser.matrix_from_path(args[2]);
 		JacobiIterative ji = new JacobiIterative();
 		ji.iterate(Ab, u, epsilon, M);
-		return "Solution: \n" + ji.getSolution() + "\nIterations\n" + ji.getIterations() + "\nError\n" + ji.getError();
+		return "Ab:\n"+Ab+"Solution: \n" + ji.getSolution() + "\nIterations: " + ji.getIterations() + "\nError: " + ji.getError();
 	}
 
 	private static String gs_iter(String [] args) throws Exception{
@@ -141,11 +137,11 @@ public class CLI {
 		Matrix u = DatParser.matrix_from_path(args[2]);
 		GaussSeidelIterative gs = new GaussSeidelIterative();
 		gs.iterate(Ab, u, epsilon, M);
-		return "Solution: \n" + gs.getSolution() + "\nIterations\n" + gs.getIterations() + "\nError\n" + gs.getError();
+		return "Ab:\n"+Ab+"Solution: \n" + gs.getSolution() + "\nIterations: " + gs.getIterations() + "\nError: " + gs.getError();
 	}
 
 	private static String power_method(String[] args) throws Exception {
-        check_arg_length(args, 5);
+        check_arg_length(args, 6);
         Matrix matrix = DatParser.matrix_from_path(args[1]);
         Vector guess = DatParser.vector_from_path(args[2]);
         Vector auxiliary = DatParser.vector_from_path(args[3]);
@@ -156,7 +152,7 @@ public class CLI {
             throw new Exception(result.unwrap_err().toString());
         }
         EigenEstimate estimate = result.unwrap();
-        return "Iterations: " + estimate.iteration + "\n" +
+        return "A:\n"+matrix+"Iterations: " + estimate.iteration + "\n" +
                "Reached epsilon before max iterations: " + estimate.timedOut +
                "Eigenvalue: " + estimate.value + "\n" +
                "Eigen Vector:\n" + estimate.vector + "\n";
