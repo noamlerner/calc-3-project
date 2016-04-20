@@ -35,6 +35,14 @@ public class CLI {
 				case "power_method":
 					System.out.println(power_method(args));
 					break;
+				case "hilbert":
+					Hilbert.main(args);
+					break;
+				case "power_convergence":
+					PowerConvergence.main(args);
+					break;
+				case "iterative_convergance":
+					IterativeConvergence.main(args);
 				case "help":
 				case "":
 				case "h":
@@ -61,7 +69,7 @@ public class CLI {
         check_arg_length(args, 2);
 		Matrix A = DatParser.matrix_from_path(args[1]);
 		LUFactorization lu = new LUFactorization(A);
-		return "A:\n"+A+"L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror:\n"+lu.getError();
+		return "A:\n"+A+"L:\n" + lu.getL() + "\nU:\n" + lu.getU() + "\nerror: "+lu.getError();
 	}
 
 	private static String qr_fact_house(String[] args) throws Exception {
@@ -170,7 +178,8 @@ public class CLI {
 				+ "\n\t\t"+filePathToU+"\n\t\t" + epsIter
 				+ "\ncommands:power_method \n\t arguments:\n\t\t" + filePathToMatrix
 				+ "\n\t\t" + filePathToU + "\n\t\ta filepath to a file containing the auxilary vector"
-				+ "\n\t\t" + epsIter;
+				+ "\n\t\t" + epsIter
+				+"\n\ncommands: hilbert power_convergence iterative_convergence";
 	}
 
 	private static void invalidString(){
