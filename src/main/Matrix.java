@@ -226,7 +226,7 @@ public class Matrix {
      * Everything below this block was coded by the group                  *
      * for this calc 3 project. It was included in this file for ease use  *
      ***********************************************************************/
-
+    
     public Matrix inverse(){
         LUFactorization lu = new LUFactorization(this);
         Matrix I = Matrix.identity(this.getNumCols());
