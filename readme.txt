@@ -11,6 +11,9 @@ To see a list of help options:
 Each command name matches the function names from the pdf:
 	 e.x. "solve_lu" matches "solve_lu" from the pdf.
 
+The output of each command is stdout (i.e. standard program
+output).
+
 #############
 # DAT files #
 #############
